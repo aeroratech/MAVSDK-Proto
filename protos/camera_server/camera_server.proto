@@ -77,6 +77,12 @@ service CameraServerService {
 
     // Respond to reset settings from SubscribeResetSettings.
     rpc RespondResetSettings(RespondResetSettingsRequest) returns(RespondResetSettingsResponse) { option (mavsdk.options.async_type) = SYNC; }
+
+    // Subscribe to camera settings requests. Each request received should response to using RespondSettings.
+    rpc SubscribeSettings(SubscribeSettingsRequest) returns(stream SettingsResponse) { option (mavsdk.options.async_type) = ASYNC; }
+
+    // Respond to camera settings from SubscribeSettings.
+    rpc RespondSettings(RespondSettingsRequest) returns(RespondSettingsResponse) { option (mavsdk.options.async_type) = SYNC; }
 }
 
 message SetInformationRequest {
@@ -223,6 +229,18 @@ message RespondResetSettingsRequest {
     CameraFeedback reset_settings_feedback = 1; // the feedback
 }
 message RespondResetSettingsResponse {
+    CameraServerResult camera_server_result = 1;
+}
+
+message SubscribeSettingsRequest {}
+message SettingsResponse {
+    int32 reserved = 1;    // reserved, just make protoc-gen-mavsdk working
+}
+
+message RespondSettingsRequest {
+    Settings settings = 1;  // camera settings
+}
+message RespondSettingsResponse {
     CameraServerResult camera_server_result = 1;
 }
 
@@ -423,4 +441,10 @@ message CaptureStatus {
     ImageStatus image_status = 4; // Current status of image capturing
     VideoStatus video_status = 5; // Current status of video capturing
     int32 image_count = 6; // Total number of images captured ('forever', or until reset using MAV_CMD_STORAGE_FORMAT)
+}
+
+message Settings {
+    Mode mode = 1;  // current camera mode
+    float zoom_level = 2;   // current zoom level
+    float focus_level = 3;  // current focus level
 }
