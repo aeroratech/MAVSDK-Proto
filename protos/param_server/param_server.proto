@@ -176,6 +176,8 @@ message ParamServerResult {
         RESULT_PARAM_NAME_TOO_LONG = 4; // Parameter name too long (> 16)
         RESULT_NO_SYSTEM = 5; // No system available
         RESULT_PARAM_VALUE_TOO_LONG = 6; // Parameter name too long (> 128)
+        RESULT_PARAM_EXISTS_ALREADY = 7; // Parameter already exists
+        RESULT_TOO_MANY_PARAMS = 8; // Too many params
     }
 
     Result result = 1; // Result enum value
