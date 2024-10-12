@@ -83,6 +83,12 @@ service CameraServerService {
 
     // Respond to camera settings from SubscribeSettings.
     rpc RespondSettings(RespondSettingsRequest) returns(RespondSettingsResponse) { option (mavsdk.options.async_type) = SYNC; }
+
+    // Subscribe system time requests. Each request received should response to using RespondSystemTime.
+    rpc SubscribeSystemTime(SubscribeSystemTimeRequest) returns(stream SystemTimeResponse) { option (mavsdk.options.async_type) = ASYNC; }
+
+    // Respond to system time from SubscribeSystemTime.
+    rpc RespondSystemTime(RespondSystemTimeRequest) returns(RespondSystemTimeResponse) { option (mavsdk.options.async_type) = SYNC; }
 }
 
 message SetInformationRequest {
@@ -241,6 +247,18 @@ message RespondSettingsRequest {
     Settings settings = 1;  // camera settings
 }
 message RespondSettingsResponse {
+    CameraServerResult camera_server_result = 1;
+}
+
+message SubscribeSystemTimeRequest {}
+message SystemTimeResponse {
+    int64 utc_time_in_ms = 1;    //clock in milliseconds since UNIX epoch
+}
+
+message RespondSystemTimeRequest {
+    CameraFeedback system_time_feedback = 1; // the feedback
+}
+message RespondSystemTimeResponse {
     CameraServerResult camera_server_result = 1;
 }
 
