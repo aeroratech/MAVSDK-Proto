@@ -120,6 +120,11 @@ service CameraService {
      * e.g. use mavlink ftp download definition file and set to camera
      */
      rpc SetDefinitionData(SetDefinitionDataRequest) returns(SetDefinitionDataResponse) { option (mavsdk.options.async_type) = SYNC; }
+
+    /*
+     * Set zoom to value as proportion of full camera range (percentage between 0.0 and 100.0).
+     */
+    rpc SetZoomRange(SetZoomRangeRequest) returns(SetZoomRangeResponse) {}
 }
 
 message PrepareRequest {}
@@ -257,6 +262,13 @@ message SetDefinitionDataRequest{
 }
 message SetDefinitionDataResponse {
     CameraResult camera_result = 1;
+}
+
+message SetZoomRangeRequest {
+    float range = 1; // Range must be between 0.0 and 100.0
+}
+message SetZoomRangeResponse {
+   CameraResult camera_result = 1;
 }
 
 // Result type.

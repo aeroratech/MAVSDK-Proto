@@ -89,6 +89,12 @@ service CameraServerService {
 
     // Respond to system time from SubscribeSystemTime.
     rpc RespondSystemTime(RespondSystemTimeRequest) returns(RespondSystemTimeResponse) { option (mavsdk.options.async_type) = SYNC; }
+
+    // Subscribe to zoom range command
+    rpc SubscribeZoomRange(SubscribeZoomRangeRequest) returns(stream ZoomRangeResponse) { option (mavsdk.options.async_type) = ASYNC; }
+
+    // Respond to zoom range.
+    rpc RespondZoomRange(RespondZoomRangeRequest) returns(RespondZoomRangeResponse) { option (mavsdk.options.async_type) = SYNC; }
 }
 
 message SetInformationRequest {
@@ -259,6 +265,18 @@ message RespondSystemTimeRequest {
     CameraFeedback system_time_feedback = 1; // the feedback
 }
 message RespondSystemTimeResponse {
+    CameraServerResult camera_server_result = 1;
+}
+
+message SubscribeZoomRangeRequest {}
+message ZoomRangeResponse {
+    float factor = 1; // The zoom factor, starting at 1x.
+}
+
+message RespondZoomRangeRequest {
+    CameraFeedback zoom_range_feedback = 1; // the feedback
+}
+message RespondZoomRangeResponse {
     CameraServerResult camera_server_result = 1;
 }
 
