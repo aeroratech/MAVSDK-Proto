@@ -78,6 +78,13 @@ service GimbalService {
       * of the other components in control (if any).
       */
      rpc SubscribeControl(SubscribeControlRequest) returns(stream ControlResponse) {}
+    /*
+     *
+     * Set gimbal debug data
+     *
+     * Custom definition debug data
+     */
+    rpc SetDebugData(SetDebugDataRequest) returns(SetDebugDataResponse) {}
 }
 
 message SetAnglesRequest {
@@ -137,6 +144,14 @@ message SubscribeControlRequest {}
 message ControlResponse {
     ControlStatus control_status = 1; // Control status
 }
+
+message SetDebugDataRequest {
+    uint32 msg_type = 1;     // message type
+}
+message SetDebugDataResponse {
+    GimbalResult gimbal_result = 1;
+}
+
 
 // Gimbal mode type.
 enum GimbalMode {
