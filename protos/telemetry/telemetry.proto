@@ -578,6 +578,7 @@ message GpsInfo {
      float velocity_uncertainty_m_s = 12; // Velocity uncertainty in metres per second
      float heading_uncertainty_deg = 13; // Heading uncertainty in degrees
      float yaw_deg = 14; // Yaw in earth frame from north.
+     int32 status = 15; // GPS status
  }
 
 // GPS fix type.
